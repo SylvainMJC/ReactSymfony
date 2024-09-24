@@ -6,7 +6,7 @@ export default function App() {
   return (
     <div>
       <Nav />
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto px-7">
         <Hero />
       </div>
     </div>
