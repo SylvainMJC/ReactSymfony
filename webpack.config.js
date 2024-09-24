@@ -73,6 +73,10 @@ Encore
     //.autoProvidejQuery()
 
     .enablePostCssLoader()
+
+    // .configureWatchOptions(function(watchOptions) {
+    //     watchOptions.poll = 250;
+    // })
 ;
 
 module.exports = Encore.getWebpackConfig();
