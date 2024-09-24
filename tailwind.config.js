@@ -5,6 +5,8 @@ module.exports = {
     "./templates/**/*.html.twig",
 
     "./assets/react/controllers/*.jsx",
+    "./assets/react/controllers/section/*.jsx",
+    "./assets/react/controllers/components/*.jsx",
   ],
   theme: {
     extend: {
