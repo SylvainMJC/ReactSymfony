@@ -23,6 +23,8 @@ class PollController extends AbstractController
         ]);
     }
 
+
+
     
 
     #[IsGranted('ROLE_USER')]
@@ -32,17 +34,14 @@ class PollController extends AbstractController
         $poll = new Poll();
         $form = $this->createForm(PollType::class, $poll);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $poll->setCreatedAt(new \DateTimeImmutable);
             $poll->setUpdatedAt(new \DateTimeImmutable);
             $poll->setCreatedBy($this->getUser());
             $entityManager->persist($poll);
             $entityManager->flush();
-
             return $this->redirectToRoute('app_poll_index', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('poll/new.html.twig', [
             'poll' => $poll,
             'form' => $form,

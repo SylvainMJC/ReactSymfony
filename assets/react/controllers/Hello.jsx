@@ -1,5 +1,9 @@
 import React from 'react';
 
 export default function (props) {
-    return <div>Hello {props.fullName}</div>;
+
+    
+
+    // console.log(props.form);
+    return <div className="flex">Hello {props.fullName}</div>;
 }
