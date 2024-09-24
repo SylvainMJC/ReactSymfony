@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Poll{% endblock %}
+
+{% block body %}
+    <h1>Poll</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ poll.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ poll.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ poll.description }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ poll.createdAt ? poll.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ poll.updatedAt ? poll.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ poll.type }}</td>
+            </tr>
+            <tr>
+                <th>Deadline</th>
+                <td>{{ poll.deadline ? poll.deadline|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_poll_index') }}">back to list</a>
+
+    <a href="{{ path('app_poll_edit', {'id': poll.id}) }}">edit</a>
+
+    {{ include('poll/_delete_form.html.twig') }}
+{% endblock %}
