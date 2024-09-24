@@ -14,11 +14,8 @@ class PollType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('createdAt')
-            ->add('updatedAt')
             ->add('type')
             ->add('deadline')
-            ->add('createdBy')
         ;
     }
 
