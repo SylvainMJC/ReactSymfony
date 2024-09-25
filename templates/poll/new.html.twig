@@ -11,7 +11,7 @@
     {# {{dump(form)}} #}
      {# <div {{ react_component('Hello', { 'form': form, 'fullname' : "name" }) }}></div> #}
     {# <div {{ react_component('Hello', { 'form': '', 'fullName': 'fermer modal'}) }}></div> #}
-    <div {{ react_component('Form', { 'form': ''}) }}></div>
+    <div {{ react_component('Form', { 'form': '', 'csrfToken': csrfToken }) }}></div>
 
     {# {{ include('poll/_form.html.twig') }} #}
 

@@ -4,10 +4,45 @@ export default function Login({ error, user, lastUsername, csrfToken }) {
   const [email, setEmail] = useState(lastUsername || "");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ email, password, csrfToken });
-  };
+
+    
+    // Create a FormData object
+    // const data = new FormData();
+    // data.append('email', email);
+    // data.append('password', password);
+
+    // const data = {
+    //   email: email,
+    //   password: password
+    // };
+    console.log(JSON.stringify({ email, password }))
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }), // Make sure these match the `username_path` and `password_path` in security.yaml
+        credentials: 'include', // This allows the backend to set cookies in the browser
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Server response:', response.status, errorData);
+        throw new Error('Login failed');
+      }
+  
+      const data = await response.json();
+      console.log('Login successful', data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+  }
+
 
   return (
     <div>
@@ -21,7 +56,7 @@ export default function Login({ error, user, lastUsername, csrfToken }) {
 
       <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form id="loginForm" onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="inputEmail">Email</label>
           <input
