@@ -10,15 +10,14 @@
     {% if app.user %}
     {% endif %}
 
-    <form method = "post" action="">
-    {% for answer in poll.answers %}
-        <div>
-            <input type="radio" name="answer-{{answer.id}}" ></input>
-            <label for="answer-{{answer.id}}">{{answer.answerText}}</label>
-        </div>
 
-    {% endfor %}
-    </form>
+
+    {{form_start(form)}}
+
+        {{ form_row(form.answerChoice) }}
+        <button class="btn">{{ button_label|default('Voter') }}</button>
+    {{form_end(form)}}
+
 
     {# <a href="{{ path('app_poll_index') }}">back to list</a> #}
 
