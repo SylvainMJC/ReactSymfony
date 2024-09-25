@@ -1,31 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion à EasyPoll{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+<div>
+    <h2 class="mt-12 text-center text-3xl font-extrabold">
+        Connectez-vous à <span class="text-primary">EasyPoll</span>
+    </h2>
+    <p class="text-center text-customGrey mt-2">
+        Ou <a href="/register" class="text-primary">créez un compte</a>
+    </p>
+    
+    <form method="post" class="max-w-md mx-auto bg-white p-6 rounded-lg border mt-6">
+        {% if error %}
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        <div class="space-y-4">
+            <div>
+                <label for="inputEmail" class="text-sm">Email</label>
+                <input type="email"
+                    value="{{ last_username }}"
+                    name="email"
+                    id="inputEmail"
+                    class="mt-1 p-2 w-full border border-customGrey/20 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="m@exemple.com"
+                    required
+                    autofocus
+                    autocomplete="email"
+                />
+            </div>
+
+            <div>
+                <label for="inputPassword" class="text-sm">Mot de passe</label>
+                <input type="password"
+                    name="password"
+                    id="inputPassword"
+                    class="mt-1 p-2 w-full border border-customGrey/20 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="Mot de passe"
+                    required
+                    autocomplete="current-password"
+                />
+            </div>
         </div>
-    {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+        <button type="submit" class="w-full mt-4 py-2 px-4 bg-primary text-white font-semibold rounded-md hover:bg-primary/80 transition-all">
+            Se connecter
+        </button>
+    </form>
+</div>
 {% endblock %}
