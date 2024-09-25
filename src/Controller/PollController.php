@@ -68,7 +68,7 @@ class PollController extends AbstractController
 
             $entityManager->persist($poll);
             $entityManager->flush();
-            return $this->redirectToRoute('app_poll_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_poll_show_vote_form', ['id' => $poll->getId()], Response::HTTP_SEE_OTHER);
         }
 
         
@@ -84,6 +84,17 @@ class PollController extends AbstractController
     public function show(Poll $poll): Response
     {
         return $this->render('poll/show.html.twig', [
+            'poll' => $poll,
+        ]);
+    }
+
+    
+    #[IsGranted('ROLE_USER')]
+    #[Route('/results/{id}', name: 'app_poll_show_results', methods: ['GET'])]
+    public function showResults(Poll $poll): Response
+    {
+        
+        return $this->render('poll/show_results.html.twig', [
             'poll' => $poll,
         ]);
     }
@@ -110,6 +121,8 @@ class PollController extends AbstractController
             $vote->setWeight(1);
             $entityManager->persist($vote);
             $entityManager->flush();
+
+            return $this->redirectToRoute('app_poll_show_results', ['id' => $poll->getId()], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('poll/poll_vote.html.twig', [
             'poll' => $poll,

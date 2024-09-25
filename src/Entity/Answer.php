@@ -68,6 +68,15 @@ class Answer
         return $this->votes;
     }
 
+    
+    /**
+     * @return Collection<int, Vote>
+     */
+    public function getVotesCount(): int
+    {
+        return $this->votes->count();
+    }
+
     public function addVote(Vote $vote): static
     {
         if (!$this->votes->contains($vote)) {
