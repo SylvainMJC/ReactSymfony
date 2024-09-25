@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../components/Button";
 
-export default function Hero() {
+export default function Hero({ user }) {
   return (
     <div className="mt-12 flex flex-col md:flex-row items-start justify-between">
       <div className="space-y-6 max-w-md">
@@ -13,12 +13,21 @@ export default function Hero() {
           Répondez à des sondages en 30 secondes. C'est simple, rapide et
           anonyme.
         </p>
-        <a href="/login" className="">
-          <Button
-            title="Commencer dès maintenant"
-            className="inline-block mt-6"
-          />
-        </a>
+
+        {user ? (
+          <div className="flex items-center space-x-4">
+            <a href="/poll/new">
+              <Button title="Commencez dès maintenant" />
+            </a>
+          </div>
+        ) : (
+          <a href="/register">
+            <Button
+              title="Inscrivez-vous dès maintenant"
+              className="inline-block mt-6"
+            />
+          </a>
+        )}
       </div>
       <img
         src="/img/HeroImg.png"

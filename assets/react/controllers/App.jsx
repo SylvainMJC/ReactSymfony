@@ -9,7 +9,7 @@ export default function App({ user }) {
     <div>
       <Nav user={user} />
       <div className="max-w-5xl mx-auto px-7">
-        <Hero />
+        <Hero user={user} />
         <HowItWork />
         <Footer />
       </div>
