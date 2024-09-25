@@ -1,0 +1,12 @@
+Ajouter styles Tailwind au formulaire de connection
+
+Mettre la page du formulaire de sondage en React
+Mettre la page des résultats du songage en React
+Ajouter des boutons conditionnels pour éditer un sondage
+Afficher le lien quelque part pour le partager facilement
+
+Ajouter la fonction de sondage à Multiples Choix
+
+Ajouter la fonctionnalité de Deadline
+
+Ajouter une page "mes sondages"
