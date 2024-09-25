@@ -4,10 +4,40 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // handle login logic
-    console.log({ email, password });
+
+    // Create a FormData object
+    // const data = new FormData();
+    // data.append('email', email);
+    // data.append('password', password);
+
+    // const data = {
+    //   email: email,
+    //   password: password
+    // };
+    console.log(JSON.stringify({ email, password }));
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Server response:", response.status, errorData);
+        throw new Error("Login failed");
+      }
+
+      const data = await response.json();
+      console.log("Login successful", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
