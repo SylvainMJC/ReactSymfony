@@ -7,6 +7,7 @@ module.exports = {
     "./assets/react/controllers/*.jsx",
     "./assets/react/controllers/section/*.jsx",
     "./assets/react/controllers/components/*.jsx",
+    "./assets/react/controllers/poll/*.jsx",
   ],
   theme: {
     extend: {
