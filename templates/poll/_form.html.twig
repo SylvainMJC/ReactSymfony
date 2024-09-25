@@ -1,4 +1,16 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_row(form.title) }}
+    {{ form_row(form.description) }}
+
+    {{ form_row(form.type) }}
+    <h3>Réponses</h3>
+    <ul class="answers"
+        {% for answer in form.answers %}
+            <li>{{ form_row(answer.answerText) }}</li>
+        {% endfor %}
+    </ul>
+
+    
+
+    <button class="btn">{{ button_label|default('Enregistrer Sondage') }}</button>
 {{ form_end(form) }}

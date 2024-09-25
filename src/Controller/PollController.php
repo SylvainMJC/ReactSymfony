@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Poll;
+use App\Entity\Answer;
 use App\Form\PollType;
 use App\Repository\PollRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -44,14 +45,28 @@ class PollController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $poll = new Poll();
+        
+        $answer1 = new Answer();
+        $answer1->setAnswerText('Réponse 1');
+        $poll->getAnswers()->add($answer1);
+        $answer2 = new Answer();
+        $answer2->setAnswerText('Réponse 2');
+        $poll->getAnswers()->add($answer2);
         $form = $this->createForm(PollType::class, $poll);
         $form->handleRequest($request);
-
         
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($poll->getAnswers() as $answer) {
+                $answer->setPoll($poll);
+                $entityManager->persist($answer);
+            }
+
+
             $poll->setCreatedAt(new \DateTimeImmutable);
             $poll->setUpdatedAt(new \DateTimeImmutable);
             $poll->setCreatedBy($this->getUser());
+            
+
             $entityManager->persist($poll);
             $entityManager->flush();
             return $this->redirectToRoute('app_poll_index', [], Response::HTTP_SEE_OTHER);
