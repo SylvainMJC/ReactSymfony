@@ -6,14 +6,26 @@ use App\Entity\Poll;
 use App\Form\PollType;
 use App\Repository\PollRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/poll')]
 class PollController extends AbstractController
 {
+
+    
+    private $csrfTokenManager;
+
+    public function __construct(CsrfTokenManagerInterface $csrfTokenManager)
+    {
+        $this->csrfTokenManager = $csrfTokenManager;
+    }
+    
     #[IsGranted('ROLE_USER')]
     #[Route('/', name: 'app_poll_index', methods: ['GET'])]
     public function index(PollRepository $pollRepository): Response
@@ -27,13 +39,15 @@ class PollController extends AbstractController
 
     
 
-    #[IsGranted('ROLE_USER')]
+    // #[IsGranted('ROLE_USER')]
     #[Route('/new', name: 'app_poll_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $poll = new Poll();
         $form = $this->createForm(PollType::class, $poll);
         $form->handleRequest($request);
+
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $poll->setCreatedAt(new \DateTimeImmutable);
             $poll->setUpdatedAt(new \DateTimeImmutable);
@@ -42,9 +56,12 @@ class PollController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('app_poll_index', [], Response::HTTP_SEE_OTHER);
         }
+
+        
         return $this->renderForm('poll/new.html.twig', [
             'poll' => $poll,
             'form' => $form,
+            'csrfToken' => $this->csrfTokenManager->getToken('unique_token_id')->getValue()
         ]);
     }
 

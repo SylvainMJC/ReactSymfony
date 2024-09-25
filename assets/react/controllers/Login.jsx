@@ -4,39 +4,45 @@ export default function Login({ error, user, lastUsername, csrfToken }) {
   const [email, setEmail] = useState(lastUsername || "");
   const [password, setPassword] = useState("");
 
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Create a FormData object
-    const data = new FormData();
-    data.append("username", formData.username);
-    data.append("password", formData.password);
 
-    // Send data to the PHP script using fetch
-    fetch("login.php", {
-      method: "POST",
-      body: data,
-    })
-      .then((response) => response.text()) // or response.json() for JSON responses
-      .then((data) => {
-        console.log("Success:", data); // Handle the response data
-      })
-      .catch((error) => {
-        console.error("Error:", error); // Handle errors
+    
+    // Create a FormData object
+    // const data = new FormData();
+    // data.append('email', email);
+    // data.append('password', password);
+
+    // const data = {
+    //   email: email,
+    //   password: password
+    // };
+    console.log(JSON.stringify({ email, password }))
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }), // Make sure these match the `username_path` and `password_path` in security.yaml
+        credentials: 'include', // This allows the backend to set cookies in the browser
       });
-  };
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Server response:', response.status, errorData);
+        throw new Error('Login failed');
+      }
+  
+      const data = await response.json();
+      console.log('Login successful', data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+  }
+
 
   return (
     <div>

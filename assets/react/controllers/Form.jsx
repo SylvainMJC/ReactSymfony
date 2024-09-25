@@ -1,12 +1,12 @@
 import React from "react";
 
 export default function (props) {
-  // console.log(props.form);
+  // console.log(props.htmlForm);
   return (
     <form name="poll" method="post">
       <div id="poll">
         <div>
-          <label for="poll_title" class="required">
+          <label htmlFor="poll_title" className="required">
             Title
           </label>
           <input
@@ -14,15 +14,15 @@ export default function (props) {
             id="poll_title"
             name="poll[title]"
             required="required"
-            maxlength="255"
+            maxLength="255"
           ></input>
         </div>
         <div>
-          <label for="poll_description">Description</label>
+          <label htmlFor="poll_description">Description</label>
           <textarea id="poll_description" name="poll[description]"></textarea>
         </div>
         <div>
-          <label for="poll_type" class="required">
+          <label htmlFor="poll_type" className="required">
             Type
           </label>
           <input
@@ -214,10 +214,10 @@ export default function (props) {
           type="hidden"
           id="poll__token"
           name="poll[_token]"
-          value="f22285.5Qw27qaRJTLi97EduJUpFixqQr1VdeE3vvOFLsXaNpU.1lpblMvcSlukk9xbiqVfV2kjKI4_BoZQ_ZLyX_OieviBOFCN0_V_XLWdhQ"
+          value={props.csrfToken}
         ></input>
       </div>
-      <button class="btn">Save</button>
+      <button className="btn">Save</button>
     </form>
   );
 }
