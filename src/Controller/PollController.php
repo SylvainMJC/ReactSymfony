@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Poll;
+use App\Entity\Vote;
 use App\Entity\Answer;
 use App\Form\PollType;
+use App\Form\PollVoteType;
 use App\Repository\PollRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,11 +90,30 @@ class PollController extends AbstractController
     
 
     #[IsGranted('ROLE_USER')]
-    #[Route('/form/{id}', name: 'app_poll_show_form', methods: ['GET', 'POST'])]
-    public function showForm(Poll $poll): Response
+    #[Route('/form/{id}', name: 'app_poll_show_vote_form', methods: ['GET', 'POST'])]
+    public function showVoteForm(Request $request, Poll $poll, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('poll/poll_vote.html.twig', [
+
+        if($poll->checkHasVoted($this->getUser())){
+            return $this->redirectToRoute("app_home");
+        }
+        
+        $pollVote = null;
+        $form = $this->createForm(PollVoteType::class, $pollVote, [
             'poll' => $poll,
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $vote = new Vote();
+            $vote->setUser($this->getUser());
+            $vote->setAnswer($poll->getAnswerbyId($form->getData()['answerChoice']));
+            $vote->setWeight(1);
+            $entityManager->persist($vote);
+            $entityManager->flush();
+        }
+        return $this->renderForm('poll/poll_vote.html.twig', [
+            'poll' => $poll,
+            'form' => $form
         ]);
     }
 

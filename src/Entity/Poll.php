@@ -164,4 +164,26 @@ class Poll
 
         return $this;
     }
+
+    public function getAnswerById(int $answerId): Answer|bool
+    {
+        foreach($this->getAnswers() as $answer){
+            if($answerId === $answer->getId()){
+                return $answer;
+            }
+        }
+        return false;
+    }
+
+    public function checkHasVoted(User $user):bool 
+    {
+        foreach($this->getAnswers() as $answer){
+            foreach($answer->getVotes() as $vote){
+                if($vote->getUser()->getId() === $user->getId()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
