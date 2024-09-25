@@ -11,7 +11,7 @@ export default function PollForm(props) {
 
   // Fonction pour ajouter une réponse, mais avec un maximum de 2 réponses supplémentaires
   const handleAddAnswer = () => {
-    if (answers.length < 4) {
+    if (answers.length < 7) {
       // 2 réponses par défaut + 2 réponses supplémentaires max
       const newAnswer = { id: answers.length, value: "" };
       setAnswers([...answers, newAnswer]);
@@ -120,10 +120,10 @@ export default function PollForm(props) {
             <button
               type="button"
               className={`text-primary border-2 border-primary bg-primary/10 rounded-full p-1 ${
-                answers.length >= 4 ? "opacity-50 cursor-not-allowed" : ""
+                answers.length >= 7 ? "opacity-50 cursor-not-allowed" : ""
               }`}
               onClick={handleAddAnswer}
-              disabled={answers.length >= 4}
+              disabled={answers.length >= 7}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
