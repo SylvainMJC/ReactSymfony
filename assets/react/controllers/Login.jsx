@@ -4,9 +4,38 @@ export default function Login({ error, user, lastUsername, csrfToken }) {
   const [email, setEmail] = useState(lastUsername || "");
   const [password, setPassword] = useState("");
 
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ email, password, csrfToken });
+    // Create a FormData object
+    const data = new FormData();
+    data.append("username", formData.username);
+    data.append("password", formData.password);
+
+    // Send data to the PHP script using fetch
+    fetch("login.php", {
+      method: "POST",
+      body: data,
+    })
+      .then((response) => response.text()) // or response.json() for JSON responses
+      .then((data) => {
+        console.log("Success:", data); // Handle the response data
+      })
+      .catch((error) => {
+        console.error("Error:", error); // Handle errors
+      });
   };
 
   return (
@@ -21,7 +50,7 @@ export default function Login({ error, user, lastUsername, csrfToken }) {
 
       <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form id="loginForm" onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="inputEmail">Email</label>
           <input
