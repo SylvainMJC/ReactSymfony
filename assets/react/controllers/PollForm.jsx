@@ -143,8 +143,8 @@ export default function PollForm(props) {
           </div>
         </div>
 
-        <div className="flex justify-end">
-          <Button title="Soumettre" className="w-full" />
+        <div className="flex justify-end mt-4">
+          <Button title="Soumettre" />
         </div>
 
         <Input
