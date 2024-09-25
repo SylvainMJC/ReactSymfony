@@ -60,12 +60,9 @@ class PollController extends AbstractController
                 $answer->setPoll($poll);
                 $entityManager->persist($answer);
             }
-
-
             $poll->setCreatedAt(new \DateTimeImmutable);
             $poll->setUpdatedAt(new \DateTimeImmutable);
             $poll->setCreatedBy($this->getUser());
-            
 
             $entityManager->persist($poll);
             $entityManager->flush();
@@ -85,6 +82,16 @@ class PollController extends AbstractController
     public function show(Poll $poll): Response
     {
         return $this->render('poll/show.html.twig', [
+            'poll' => $poll,
+        ]);
+    }
+    
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/form/{id}', name: 'app_poll_show_form', methods: ['GET', 'POST'])]
+    public function showForm(Poll $poll): Response
+    {
+        return $this->render('poll/poll_vote.html.twig', [
             'poll' => $poll,
         ]);
     }
