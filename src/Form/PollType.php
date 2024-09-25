@@ -22,6 +22,9 @@ class PollType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token', // Hidden input field name (default is _token)
+            'csrf_token_id'   => 'unique_token_id', // This should match the ID used in getToken()
             'data_class' => Poll::class,
         ]);
     }
