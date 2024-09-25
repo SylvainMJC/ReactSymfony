@@ -1,7 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "./components/Button";
 import Input from "./components/Input";
+
 export default function PollForm(props) {
+  // Les deux premiers champs de réponse par défaut
+  const [answers, setAnswers] = useState([
+    { id: 0, value: "" },
+    { id: 1, value: "" },
+  ]);
+
+  // Fonction pour ajouter une réponse, mais avec un maximum de 2 réponses supplémentaires
+  const handleAddAnswer = () => {
+    if (answers.length < 4) {
+      // 2 réponses par défaut + 2 réponses supplémentaires max
+      const newAnswer = { id: answers.length, value: "" };
+      setAnswers([...answers, newAnswer]);
+    }
+  };
+
+  // Gestion de la modification des inputs
+  const handleInputChange = (id, event) => {
+    const newAnswers = answers.map((answer) =>
+      answer.id === id ? { ...answer, value: event.target.value } : answer
+    );
+    setAnswers(newAnswers);
+  };
+
+  // Fonction pour supprimer uniquement les réponses ajoutées
+  const handleRemoveAnswer = (id) => {
+    if (answers.length > 2) {
+      // Ne permettre la suppression que des champs ajoutés (au-delà des deux premiers)
+      const newAnswers = answers.filter((answer) => answer.id !== id);
+      setAnswers(newAnswers);
+    }
+  };
+
   return (
     <div>
       <h2 className="mt-12 text-3xl font-extrabold text-center">
@@ -60,27 +93,37 @@ export default function PollForm(props) {
         <div>
           <h3 className="text-base font-medium mt-4">Réponses</h3>
           <ul className="space-y-2 mt-2">
-            <li>
-              <Input
-                id="poll_answers_0_answerText"
-                name="poll[answers][0][answerText]"
-                required="required"
-                placeholder="Réponse"
-              />
-            </li>
-            <li>
-              <Input
-                id="poll_answers_1_answerText"
-                name="poll[answers][1][answerText]"
-                required="required"
-                placeholder="Réponse"
-              />
-            </li>
+            {answers.map((answer, index) => (
+              <li key={answer.id} className="flex items-center">
+                <Input
+                  id={`poll_answers_${answer.id}_answerText`}
+                  name={`poll[answers][${answer.id}][answerText]`}
+                  required="required"
+                  placeholder={`Réponse ${index + 1}`}
+                  value={answer.value}
+                  onChange={(event) => handleInputChange(answer.id, event)}
+                />
+                {/*  Display red cross */}
+                {index >= 2 && (
+                  <button
+                    type="button"
+                    className="ml-2 text-red-500"
+                    onClick={() => handleRemoveAnswer(answer.id)}
+                  >
+                    X
+                  </button>
+                )}
+              </li>
+            ))}
           </ul>
           <div className="flex justify-center mt-2">
             <button
               type="button"
-              className="text-primary border-2 border-primary bg-primary/10 rounded-full p-1"
+              className={`text-primary border-2 border-primary bg-primary/10 rounded-full p-1 ${
+                answers.length >= 4 ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              onClick={handleAddAnswer}
+              disabled={answers.length >= 4}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
