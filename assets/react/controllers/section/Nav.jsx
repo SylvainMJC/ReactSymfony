@@ -6,7 +6,7 @@ export const Nav = () => {
     <div className="flex flex-row justify-between items-center py-4 md:px-8 px-4">
       <h1 className="text-2xl text-primary font-bold">Easy Poll</h1>
       <a href="/login">
-        <Button title="S'inscrire" />
+        <Button title="Se connecter" />
       </a>
     </div>
   );
