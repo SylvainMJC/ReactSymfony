@@ -6,6 +6,9 @@ use App\Entity\Poll;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class PollType extends AbstractType
 {
@@ -14,9 +17,20 @@ class PollType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('type')
-            ->add('deadline')
+            ->add('type', ChoiceType::class, [
+                'choices'  => [
+                    'Unique' => 1,
+                    'Multiple' => 2,
+                ],
+            ])
+            // ->add('deadline')
         ;
+        
+        $builder->add('answers', CollectionType::class, [
+            'entry_type' => AnswerType::class,
+            'entry_options' => ['label' => false],
+            'allow_add' => true,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
