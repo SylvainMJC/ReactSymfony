@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sondage{% endblock %}
+
+{% block body %}
+    <h1>Sondage :</h1>
+    <h2>{{ poll.title }} <h2>
+    <p>{{ poll.description }} <p>
+
+    {% if app.user %}
+    {% endif %}
+
+    <form method = "post" action="">
+    {% for answer in poll.answers %}
+        <div>
+            <input type="radio" name="answer-{{answer.id}}" ></input>
+            <label for="answer-{{answer.id}}">{{answer.answerText}}</label>
+        </div>
+
+    {% endfor %}
+    </form>
+
+    {# <a href="{{ path('app_poll_index') }}">back to list</a> #}
+
+    {# <a href="{{ path('app_poll_edit', {'id': poll.id}) }}">edit</a> #}
+
+    {# {{ include('poll/_delete_form.html.twig') }} #}
+{% endblock %}
