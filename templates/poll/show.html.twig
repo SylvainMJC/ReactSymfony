@@ -3,44 +3,55 @@
 {% block title %}Poll{% endblock %}
 
 {% block body %}
-    <h1>Poll</h1>
+<div class="bg-gray-100 min-h-screen flex items-center justify-center py-8">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-4xl w-full">
+        <h1 class="text-3xl font-bold text-center mb-8">Détails du Sondage</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ poll.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ poll.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ poll.description }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ poll.createdAt ? poll.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ poll.updatedAt ? poll.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ poll.type }}</td>
-            </tr>
-            <tr>
-                <th>Deadline</th>
-                <td>{{ poll.deadline ? poll.deadline|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="min-w-full bg-white rounded-lg shadow overflow-hidden">
+            <tbody>
+                <tr class="bg-gray-50">
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id</th>
+                    <td class="px-6 py-4 text-sm text-gray-900">{{ poll.id }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Titre</th>
+                    <td class="px-6 py-4 text-sm text-gray-900">{{ poll.title }}</td>
+                </tr>
+                <tr class="bg-gray-50">
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                    <td class="px-6 py-4 text-sm text-gray-900">{{ poll.description }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Créé le</th>
+                    <td class="px-6 py-4 text-sm text-gray-900">{{ poll.createdAt ? poll.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr class="bg-gray-50">
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mis à jour le</th>
+                    <td class="px-6 py-4 text-sm text-gray-900">{{ poll.updatedAt ? poll.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                    <td class="px-6 py-4 text-sm text-gray-900">{{ poll.type == 1 ? "Unique" : "Multiple" }}</td>
+                </tr>
+                <tr class="bg-gray-50">
+                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date limite</th>
+                    <td class="px-6 py-4 text-sm text-gray-900">{{ poll.deadline ? poll.deadline|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_poll_index') }}">back to list</a>
+        <div class="mt-8 flex justify-end space-x-4">
+            <a href="{{ path('app_poll_index') }}" class="inline-block bg-gray-200 text-gray-700 py-2 px-4 rounded-lg text-lg font-semibold hover:bg-gray-300">
+                Retour à la liste
+            </a>
+            <a href="{{ path('app_poll_edit', {'id': poll.id}) }}" class="inline-block bg-purple text-white py-2 px-4 rounded-lg text-lg font-semibold hover:bg-purple-700">
+                Modifier
+            </a>
+        </div>
 
-    <a href="{{ path('app_poll_edit', {'id': poll.id}) }}">edit</a>
-
-    {{ include('poll/_delete_form.html.twig') }}
+        <div class="mt-4">
+            {{ include('poll/_delete_form.html.twig') }}
+        </div>
+    </div>
+</div>
 {% endblock %}

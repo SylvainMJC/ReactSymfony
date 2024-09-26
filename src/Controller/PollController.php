@@ -42,7 +42,7 @@ class PollController extends AbstractController
 
     
 
-    // #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER')]
     #[Route('/new', name: 'app_poll_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
