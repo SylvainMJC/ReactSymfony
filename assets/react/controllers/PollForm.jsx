@@ -18,7 +18,6 @@ export default function PollForm(props) {
     }
   };
 
-  // Gestion de la modification des inputs
   const handleInputChange = (id, event) => {
     const newAnswers = answers.map((answer) =>
       answer.id === id ? { ...answer, value: event.target.value } : answer
@@ -26,10 +25,8 @@ export default function PollForm(props) {
     setAnswers(newAnswers);
   };
 
-  // Fonction pour supprimer uniquement les réponses ajoutées
   const handleRemoveAnswer = (id) => {
     if (answers.length > 2) {
-      // Ne permettre la suppression que des champs ajoutés (au-delà des deux premiers)
       const newAnswers = answers.filter((answer) => answer.id !== id);
       setAnswers(newAnswers);
     }
