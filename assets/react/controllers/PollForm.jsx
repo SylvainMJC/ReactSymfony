@@ -11,14 +11,13 @@ export default function PollForm(props) {
 
   // Fonction pour ajouter une réponse, mais avec un maximum de 2 réponses supplémentaires
   const handleAddAnswer = () => {
-    if (answers.length < 4) {
+    if (answers.length < 7) {
       // 2 réponses par défaut + 2 réponses supplémentaires max
       const newAnswer = { id: answers.length, value: "" };
       setAnswers([...answers, newAnswer]);
     }
   };
 
-  // Gestion de la modification des inputs
   const handleInputChange = (id, event) => {
     const newAnswers = answers.map((answer) =>
       answer.id === id ? { ...answer, value: event.target.value } : answer
@@ -26,10 +25,8 @@ export default function PollForm(props) {
     setAnswers(newAnswers);
   };
 
-  // Fonction pour supprimer uniquement les réponses ajoutées
   const handleRemoveAnswer = (id) => {
     if (answers.length > 2) {
-      // Ne permettre la suppression que des champs ajoutés (au-delà des deux premiers)
       const newAnswers = answers.filter((answer) => answer.id !== id);
       setAnswers(newAnswers);
     }
@@ -120,10 +117,10 @@ export default function PollForm(props) {
             <button
               type="button"
               className={`text-primary border-2 border-primary bg-primary/10 rounded-full p-1 ${
-                answers.length >= 4 ? "opacity-50 cursor-not-allowed" : ""
+                answers.length >= 7 ? "opacity-50 cursor-not-allowed" : ""
               }`}
               onClick={handleAddAnswer}
-              disabled={answers.length >= 4}
+              disabled={answers.length >= 7}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -143,8 +140,8 @@ export default function PollForm(props) {
           </div>
         </div>
 
-        <div className="flex justify-end">
-          <Button title="Soumettre" className="w-full" />
+        <div className="flex justify-end mt-4">
+          <Button title="Soumettre" />
         </div>
 
         <Input

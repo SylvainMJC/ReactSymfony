@@ -3,5 +3,5 @@
 {% block title %}Easy Poll{% endblock %}
 
 {% block body %}
-	<div {{ react_component('App') }}></div>
+	<div {{ react_component('App', { 'user': is_granted("IS_AUTHENTICATED_REMEMBERED") }) }}></div>
 {% endblock %}

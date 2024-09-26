@@ -3,8 +3,5 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1>Inscription</h1>
-
      <div {{ react_component('RegisterForm', { 'csrfToken': registrationForm.children._token.vars.value }) }}></div>
-
 {% endblock %}
