@@ -1,94 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sondage{% endblock %}
-{% block stylesheets %}
-    {{ encore_entry_link_tags('app') }}
-    <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f8f8f8;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                margin: 0;
-            }
-            .container {
-                background-color: #fff;
-                border: 1px solid #e0e0e0;
-                border-radius: 10px;
-                padding: 20px;
-                max-width: 400px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            }
-            .title {
-                font-size: 24px;
-                font-weight: bold;
-                text-align: center;
-                margin-bottom: 20px;
-                color: #6d5dd3;
-            }
-            .option {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                background-color: #f4f4ff;
-                border: 1px solid #e0e0e0;
-                border-radius: 5px;
-                padding: 10px 15px;
-                margin-bottom: 10px;
-                cursor: pointer;
-            }
-            .option:hover {
-                background-color: #e0e0ff;
-            }
-            .option input[type="radio"] {
-                margin-right: 10px;
-            }
-            .result {
-                font-size: 18px;
-                color: #6d5dd3;
-            }
-            .button {
-                display: block;
-                width: 100%;
-                padding: 10px;
-                background-color: #f8f8f8;
-                border: 1px solid #e0e0e0;
-                border-radius: 5px;
-                text-align: center;
-                font-size: 16px;
-                color: #333;
-                text-decoration: none;
-                margin-top: 20px;
-            }
-            .button:hover {
-                background-color: #e0e0e0;
-            }
-    </style>
-{% endblock %}
+{% block title %}Résultats du Sondage{% endblock %}
+
 {% block body %}
-    {# <h1>Sondage</h1> #}
-
+<div>
+    <h2 class="mt-12 text-center text-3xl font-extrabold">
+        Résultats du <span class="text-primary">Sondage</span>
+    </h2>
+    <p class="text-center text-customGrey mt-2">
+        Merci d'avoir participé à ce sondage
+    </p>
     
-    <div class="container">
-        <div class="title">{{poll.title}}</div>
-
-        <div class="description">{{poll.description}}</div>
-
+    <div class="max-w-md mx-auto bg-white p-6 mt-6">
+        
         {% for answer in poll.answers %}
-        <div class="option">
-            <input type="radio" name="transport" id="answer-{{answer.id}}">
-            <label for="answer-{{answer.id}}">{{answer.answerText}}</label>
-            <span class="result">{{answer.votesCount}}</span>
+        <div class="flex justify-between items-center bg-purple-50 border border-primary rounded-lg p-3 mb-3">
+            <label class="flex-1 text-primary">{{answer.answerText}}</label>
+            <span class="text-primary font-bold">{{answer.votesCount}} votes</span>
         </div>
         {% endfor %}
-        <a href="{{ path('app_home') }}" class="button">Retourner à l'accueil</a>
+        
     </div>
-
-    {# {% if app.user and app.user.id == poll.author.id %}
-        <a href="{{ path('app_poll_index') }}">back to list</a>
-        <a href="{{ path('app_poll_edit', {'id': poll.id}) }}">Editer le Sondage</a>
-        {{ include('poll/_delete_form.html.twig') }}
-    {% endif %} #}
+    <div class="flex justify-center mt-6">
+        <a href="{{ path('app_home') }}" class="border font-medium text-md rounded-md px-4 py-2 hover:bg-customGrey/10 transition-all">
+            Retourner à l'accueil
+        </a>
+    </div>
+</div>
 {% endblock %}
