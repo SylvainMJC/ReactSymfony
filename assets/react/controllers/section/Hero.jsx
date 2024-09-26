@@ -6,7 +6,7 @@ export default function Hero({ user }) {
     <div className="mt-12 flex flex-col md:flex-row items-start justify-between">
       <div className="space-y-6 max-w-md">
         <h1 className="font-bold text-3xl md:text-5xl">
-          Partagez Votre Avis en Toute{" "}
+          Partagez Votre Avis en Tout{" "}
           <span className="text-primary">Anonymat</span>
         </h1>
         <p className="font-semibold md:text-lg">

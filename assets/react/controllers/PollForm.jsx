@@ -38,7 +38,7 @@ export default function PollForm(props) {
         Créer un <span className="text-primary">Sondage</span>
       </h2>
       <p className="text-center text-customGrey text-sm mt-2">
-        Créer votre propre sondage !
+        Créez votre propre sondage !
       </p>
       <form
         name="poll"
