@@ -7,13 +7,11 @@
     <h2>{{ poll.title }} <h2>
     <p>{{ poll.description }} <p>
 
-    {% if app.user %}
-    {% endif %}
 
+     <div {{ react_component('PollVoteForm', { 'poll': poll, 'answers': poll.answers }) }}></div>
 
 
     {{form_start(form)}}
-
         {{ form_row(form.answerChoice) }}
         <button class="btn">{{ button_label|default('Voter') }}</button>
     {{form_end(form)}}
