@@ -3,43 +3,53 @@
 {% block title %}Poll index{% endblock %}
 
 {% block body %}
-    <h1>Poll index</h1>
-
-    <table class="table-fixed bg-red-500">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>Type</th>
-                <th>Deadline</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for poll in polls %}
-            <tr>
-                <td>{{ poll.id }}</td>
-                <td>{{ poll.title }}</td>
-                <td>{{ poll.description }}</td>
-                <td>{{ poll.createdAt ? poll.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ poll.updatedAt ? poll.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ poll.type }}</td>
-                <td>{{ poll.deadline ? poll.deadline|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_poll_show', {'id': poll.id}) }}">show</a>
-                    <a href="{{ path('app_poll_edit', {'id': poll.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_poll_new') }}">Create new</a>
+<div class="bg-gray-100 min-h-screen flex items-center justify-center py-8">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-6xl w-full">
+        <h1 class="text-3xl font-bold text-center mb-8">Liste des sondages</h1>
+        
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white rounded-lg shadow overflow-hidden">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Id</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Titre</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Description</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Créé le</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Mis à jour le</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Type</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date limite</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200 p-2">
+                    {% for poll in polls %}
+                        <tr class="p-2 hover:bg-gray-50 border">
+                            <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ poll.id }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ poll.title }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ poll.description }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">{{ poll.createdAt ? poll.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">{{ poll.updatedAt ? poll.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900">{{ poll.type == 1 ? "Unique" : "Multiple" }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">{{ poll.deadline ? poll.deadline|date('Y-m-d H:i:s') : '' }}</td>
+                            <td class="px-6 py-4 text-sm font-medium">
+                                <a href="{{ path('app_poll_show', {'id': poll.id}) }}" class="text-primary hover:text-primary">Voir</a>
+                                <a href="{{ path('app_poll_edit', {'id': poll.id}) }}" class="ml-4 text-primary hover:text-primary">Modifier</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="8" class="px-6 py-4 text-center text-sm text-gray-500">Aucun enregistrement trouvé</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="mt-8 text-right">
+            <a href="{{ path('app_poll_new') }}" class="inline-block bg-primary text-white py-2 px-4 rounded-lg text-lg font-semibold hover:bg-purple-700">
+                Créer un nouveau sondage
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock %}
