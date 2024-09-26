@@ -94,6 +94,7 @@ class PollController extends AbstractController
     public function showResults(Poll $poll): Response
     {
         
+
         return $this->render('poll/show_results.html.twig', [
             'poll' => $poll,
         ]);
@@ -126,7 +127,9 @@ class PollController extends AbstractController
         }
         return $this->renderForm('poll/poll_vote.html.twig', [
             'poll' => $poll,
-            'form' => $form
+            'form' => $form,
+            'csrfToken' => $this->csrfTokenManager->getToken('unique_token_id')->getValue(),
+            'pollDataString' => json_encode($poll)
         ]);
     }
 
@@ -143,7 +146,7 @@ class PollController extends AbstractController
             $entityManager->persist($poll);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_poll_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_poll_show_vote_form', ['id' => $poll->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('poll/edit.html.twig', [

@@ -3,23 +3,62 @@
 {% block title %}Sondage{% endblock %}
 
 {% block body %}
-    <h1>Sondage :</h1>
-    <h2>{{ poll.title }} <h2>
-    <p>{{ poll.description }} <p>
+
+     {# <div {{ react_component('PollVoteForm', { 'poll': poll, 'answers': poll.answers, 'csrfToken': csrfToken }) }}></div> #}
+
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+    <h1 class="text-2xl font-bold text-center mb-4">{{ poll.title }}</h1>
+    <p class="text-center mb-6 text-gray-600">{{ poll.description }}</p>
+    <div class="space-y-4">
+        {{ form_start(form) }}
+        <div class="space-y-4">
+            {# Affichage de chaque choix de réponse #}
+            {% for choice in form.answerChoice %}
+                <div class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                    {{ form_widget(choice, {'attr': {'class': 'form-radio h-5 w-5 text-purple-600'}}) }}
+                    {{ form_label(choice, null, {'label_attr': {'class': 'ml-2 text-lg font-medium text-gray-800'}}) }}
+                </div>
+            {% endfor %}
+            <div class="text-red-500 text-sm mt-2">
+                {{ form_errors(form.answerChoice) }}
+            </div>
+
+        <button class="w-full mt-6 bg-purple-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+            {{ button_label|default('Soumettre') }}
+        </button>
+        </div>
 
 
-     <div {{ react_component('PollVoteForm', { 'poll': poll, 'answers': poll.answers }) }}></div>
+        {# Bouton de soumission #}
+        {# <button class="w-full mt-6 bg-purple-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-purple-700">
+            {{ button_label|default('Soumettre') }}
+        </button> #}
+        {{ form_end(form) }}
+    </div>
+</div>
 
 
-    {{form_start(form)}}
-        {{ form_row(form.answerChoice) }}
-        <button class="btn">{{ button_label|default('Voter') }}</button>
-    {{form_end(form)}}
+    {# <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h1 class="text-2xl font-bold text-center mb-4">{{ poll.title }}</h1>
+        <p class="text-center mb-6 text-gray-600">{{ poll.description }}</p>
+        <div class="space-y-4">
+            {{form_start(form)}}
+            <div class="space-y-4">
+                {{ form_widget(form.answerChoice,  {'attr': {'class': 'form-radio h-5 w-5 text-purple-600'}} ) }}
+                {{ form_label(form.answerChoice,  {'attr': {'class': 'ml-2 text-lg font-medium text-gray-800'}}) }}
+            </div>
 
+            <div class="form-error">
+                {{ form_errors(form.answerChoice) }}
+            </div>
+
+                <button class="btn">{{ button_label|default('Voter') }}</button>
+            {{form_end(form)}}
+        </div>
+    </div> #}
 
     {# <a href="{{ path('app_poll_index') }}">back to list</a> #}
-
     {# <a href="{{ path('app_poll_edit', {'id': poll.id}) }}">edit</a> #}
-
     {# {{ include('poll/_delete_form.html.twig') }} #}
+
 {% endblock %}
