@@ -73,7 +73,7 @@ export default function PollForm(props) {
           />
         </div>
 
-        <div>
+        <div className="hidden">
           <label htmlFor="poll_type" className="block text-sm font-medium mt-4">
             Type
           </label>

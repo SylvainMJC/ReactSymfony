@@ -22,15 +22,15 @@ export default function RegistrationForm(props) {
         <div className="rounded-md shadow-sm space-y-4">
           <div>
             <label htmlFor="registration_form_email" className="text-sm">
-              Email
+              Pseudo
             </label>
             <Input
-              type="email"
+              type="text"
               id="registration_form_email"
               name="registration_form[email]"
               required="required"
               maxLength="180"
-              placeholder="m@exemple.com"
+              placeholder="John Doe"
             />
           </div>
 
