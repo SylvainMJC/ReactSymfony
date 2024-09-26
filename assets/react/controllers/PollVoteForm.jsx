@@ -59,7 +59,7 @@ export default function (props) {
         type="hidden"
         id="poll_vote__token"
         name="poll_vote[_token]"
-        value="d10a.gx6eC4CFsSQVhgDOJLAXE3dtXVjaQS60iBk9iRmOcJQ.4lboZPXyhGp20GiRTIZEQU4PNBSKGGLn3X9rsXujR9u0TLNmrdf_YiXjbw"
+        value={props.csrfToken}
       ></input>
     </form>
   );

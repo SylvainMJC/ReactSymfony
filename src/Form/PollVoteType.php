@@ -21,7 +21,10 @@ class PollVoteType extends AbstractType
             ->add('answerChoice', ChoiceType::class, [
             'choices'  => $choices,
             'expanded' => true,
-            'multiple' => false
+            'multiple' => false,
+            'attr' => [
+                // 'class' => "flex items-center" 
+            ]
             ])
         ;
     }
