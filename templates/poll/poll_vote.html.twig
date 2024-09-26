@@ -6,33 +6,30 @@
 
      {# <div {{ react_component('PollVoteForm', { 'poll': poll, 'answers': poll.answers, 'csrfToken': csrfToken }) }}></div> #}
 
-    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-    <h1 class="text-2xl font-bold text-center mb-4">{{ poll.title }}</h1>
-    <p class="text-center mb-6 text-gray-600">{{ poll.description }}</p>
+    <div class="mt-12 p-6 max-w-md mx-auto w-full">
+    <h1 class="text-2xl font-bold text-center mb-2">{{ poll.title }}</h1>
+    <p class="text-center mb-6 text-customGrey">{{ poll.description }}</p>
     <div class="space-y-4">
         {{ form_start(form) }}
         <div class="space-y-4">
             {# Affichage de chaque choix de réponse #}
             {% for choice in form.answerChoice %}
-                <div class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-                    {{ form_widget(choice, {'attr': {'class': 'form-radio h-5 w-5 text-purple-600'}}) }}
-                    {{ form_label(choice, null, {'label_attr': {'class': 'ml-2 text-lg font-medium text-gray-800'}}) }}
-                </div>
+               <div class="flex items-center mt-1 p-3 w-full border border-customGrey/20 rounded-md">
+                 {{ form_widget(choice, {'attr': {'class': 'form-radio size-4 text-primary focus:ring-primary focus:border-primary focus:bg-primary/20'}}) }}
+                 {{ form_label(choice, null, {'label_attr': {'class': 'ml-2 text-lg font-medium text-primary'}}) }}
+               </div>
+
             {% endfor %}
             <div class="text-red-500 text-sm mt-2">
                 {{ form_errors(form.answerChoice) }}
             </div>
 
-        <button class="w-full mt-6 bg-purple-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
-            {{ button_label|default('Soumettre') }}
+        <button class="w-full mt-4 py-2 px-4 bg-primary text-white font-semibold rounded-md hover:bg-primary/80 transition-all">
+            {{ button_label|default('Voter') }}
         </button>
         </div>
 
 
-        {# Bouton de soumission #}
-        {# <button class="w-full mt-6 bg-purple-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-purple-700">
-            {{ button_label|default('Soumettre') }}
-        </button> #}
         {{ form_end(form) }}
     </div>
 </div>
@@ -44,7 +41,7 @@
         <div class="space-y-4">
             {{form_start(form)}}
             <div class="space-y-4">
-                {{ form_widget(form.answerChoice,  {'attr': {'class': 'form-radio h-5 w-5 text-purple-600'}} ) }}
+                {{ form_widget(form.answerChoice,  {'attr': {'class': 'form-radio h-5 w-5 text-primary'}} ) }}
                 {{ form_label(form.answerChoice,  {'attr': {'class': 'ml-2 text-lg font-medium text-gray-800'}}) }}
             </div>
 
